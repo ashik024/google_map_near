@@ -1,5 +1,6 @@
 package com.example.globe_map2;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -11,14 +12,20 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -29,6 +36,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -55,6 +63,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     Button button;
 
+    RelativeLayout relativeLayout;
+    TextView close;
+
 
     ArrayList<LatLng> arrayListTmp= new ArrayList<LatLng>();
     ArrayList<LatLng> arrayList= new ArrayList<LatLng>();
@@ -79,6 +90,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
 
          button= findViewById(R.id.find_depo);
+
+        relativeLayout= findViewById(R.id.relative);
+        close= findViewById(R.id.close);
         mapFragment.getMapAsync(this);
         arrayList.add(Depo1);
         arrayList.add(Depo2);
@@ -115,7 +129,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
                 }
-
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
 
             }
         });
@@ -318,15 +332,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
     public void setAllMarkers(){
+
+
         for (int i=0; i<arrayList.size();i++){
 
             for (int j =0;j<title.size();j++){
 
-                marker=  mMap.addMarker(new MarkerOptions().position(arrayList.get(i)).title(String.valueOf(title.get(i))));
+                marker=  mMap.addMarker(new MarkerOptions().position(arrayList.get(i)).icon(BitmapDescriptorFactory.fromResource(R.drawable.officebuilding)).title(String.valueOf(title.get(i))));
+
+
+
             }
             mMap.moveCamera(CameraUpdateFactory.newLatLng(arrayList.get(i)));
+
         }
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                relativeLayout.setVisibility(View.VISIBLE);
+                button.setVisibility(View.INVISIBLE);
+
+                close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        relativeLayout.setVisibility(View.INVISIBLE);
+                        button.setVisibility(View.VISIBLE);
+                    }
+                });
+                return false;
+
+            }
+        });
     }
+//    private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int vectorResId) {
+//        Drawable vectorDrawable = ContextCompat.getDrawable(context, R.drawable.ic_baseline_account_balance_24);
+//        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+//        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+//        Canvas canvas = new Canvas(bitmap);
+//        vectorDrawable.draw(canvas);
+//        return BitmapDescriptorFactory.fromBitmap(bitmap);
+//    }
 
     public double CalculationByDistance(Location StartP, Location EndP) {
         int Radius = 6371;// radius of earth in Km
@@ -357,7 +403,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 for (int j =0;j<title.size();j++){
 
-                    marker=  mMap.addMarker(new MarkerOptions().position(arrayListTmp.get(i)).title(String.valueOf(title.get(i))));
+                    marker=  mMap.addMarker(new MarkerOptions().position(arrayListTmp.get(i)).icon(BitmapDescriptorFactory.fromResource(R.drawable.officebuilding)).title(String.valueOf(title.get(i))));
                 }
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(arrayListTmp.get(i)));
             }

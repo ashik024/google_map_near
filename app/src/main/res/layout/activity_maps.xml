@@ -17,6 +17,73 @@ tools:context=".dumy">
         android:layout_height="match_parent"
         tools:context=".MapsActivity" />
 
+
+    <RelativeLayout
+        android:id="@+id/relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cardview_light_background"
+
+        android:visibility="invisible"
+        android:layout_alignParentBottom="true"
+
+
+        >
+
+        <TextView
+            android:id="@+id/Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+
+          android:layout_margin="10dp"
+           android:layout_toRightOf="@+id/profilePictureDRi"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:padding="5dp"/>
+        <TextView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Close"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:padding="5dp"/>
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vitae risus nec enim auctor bibendum. Donec laoreet risus arcu, in laoreet sapien mattis sit amet. Quisque nec felis in ex aliquet cursus. Aliquam sit amet lacus lobortis, vestibulum lacus vitae, consectetur elit."
+            android:layout_margin="10dp"
+
+            android:layout_toRightOf="@+id/profilePictureDRi"
+            android:textSize="10dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_below="@id/Name"
+            android:padding="5dp"/>
+
+
+
+
+        <ImageView
+            android:id="@+id/profilePictureDRi"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_margin="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_baseline_image_24"/>
+
+
+    </RelativeLayout>
+
+
     <Button
         android:id="@+id/find_depo"
         android:layout_width="wrap_content"
